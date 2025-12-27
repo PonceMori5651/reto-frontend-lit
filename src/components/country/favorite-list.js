@@ -58,7 +58,7 @@ export class FavoriteList extends LitElement {
         `
     ];
 
-    updated(changedProps) {
+    willUpdate(changedProps) {
         if (changedProps.has('favoritesComplete')) {
             this.page = 1;
             this.applyFilters();

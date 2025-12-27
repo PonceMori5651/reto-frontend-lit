@@ -58,7 +58,7 @@ export class CountryList extends LitElement {
         `
     ];
 
-    updated(changedProps) {
+    willUpdate(changedProps) {
         if (changedProps.has('countries')) {
             this.page = 1;
             this.applyFilters();
