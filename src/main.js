@@ -2,6 +2,7 @@ import './app/app-root.js';
 import './components/genericos/app-loader.js';
 import './components/country/country-card.js';
 import './components/country/country-list.js';
+import './components/country/country-modal.js';
 import './components/country/favorite-list.js';
 import './components/genericos/empty-state.js';
 import './components/filters/title-filter.js';

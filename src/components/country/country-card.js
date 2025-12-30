@@ -103,10 +103,17 @@ export class CountryCard extends LitElement {
         }));
     }
 
+    openDetails() {
+        this.dispatchEvent(new CustomEvent('show-country', {
+            detail: { country: this.country },
+            bubbles: true,
+            composed: true
+        }));
+    }
     render() {
         if (!this.country?.name) return null;
         return html`
-        <div class="card">
+        <div class="card" @click=${this.openDetails}>
             <img
             src="${this.country.flags?.png}"
             alt="Bandera de ${this.country.name.common}"
@@ -125,7 +132,7 @@ export class CountryCard extends LitElement {
             </div>
             <button
                 class="${this.isFavorite ? 'fav' : ''}"
-                @click=${this.markFavorite}
+                @click=${(e) => { e.stopPropagation(); this.markFavorite(); }}
             >${this.isFavorite ? 'Quitar favorito' : 'Agregar favorito'}
             </button>
         </div>

@@ -1,5 +1,4 @@
 import { LitElement, html, css } from 'lit';
-import '../components/filters/title-filter.js';
 import { getCountriesByRegion, loadFromStorage } from '../services/countries.service.js';
 
 const STORAGE_KEY = 'favorite-countries';
@@ -7,11 +6,11 @@ export class AppRoot extends LitElement {
     static get properties() {
         return {
             countries: { type: Array },
+            favorites: { type: Array },
             loading: { type: Boolean },
             continent: { type: Array },
             selectedCountry: { type: String },
-            view: { type: String },
-            favorites: { type: Array }
+            view: { type: String }
         };
     }
 
@@ -22,7 +21,7 @@ export class AppRoot extends LitElement {
         this.selectedCountry = '';
         this.view = 'countries';
         this.loading = true;
-        this.continent = ['Europe', 'America', 'Asia', 'Africa'];
+        this.continent = ['America', 'Europe', 'Asia', 'Africa'];
     }
 
     static styles = [
@@ -151,13 +150,11 @@ export class AppRoot extends LitElement {
             ${this.view === 'countries' ? html`
                 <country-list 
                 .countries=${this.countries}
-                .pageSize=${12}
                 @favorites-changed=${this.onFavoritesChanged}
                 ></country-list>
             ` : html`
                 <favorite-list 
                 .favoritesComplete=${this.getFavoriteCountries()}
-                .pageSize=${12}
                 @favorites-changed=${this.onFavoritesChanged}
                 ></favorite-list>
                 `}

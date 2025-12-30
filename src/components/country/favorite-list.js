@@ -14,7 +14,8 @@ export class FavoriteList extends LitElement {
             favoritesFilter: { type: Array },
             searchTerm: { type: String },
             page: { type: Number },
-            pageSize: { type: Number }
+            pageSize: { type: Number },
+            selectedCountry: { type: Object }
         };
     }
 
@@ -26,6 +27,7 @@ export class FavoriteList extends LitElement {
         this.searchTerm = '';
         this.page = 1;
         this.pageSize = 12;
+        this.selectedCountry = null;
     }
 
     connectedCallback() {
@@ -35,6 +37,9 @@ export class FavoriteList extends LitElement {
             this.searchTerm = e.detail.toLowerCase();
             this.page = 1;
             this.applyFilters();
+        });
+        this.addEventListener('show-country', (e) => {
+            this.selectedCountry = e.detail.country;
         });
     }
 
@@ -112,6 +117,10 @@ export class FavoriteList extends LitElement {
         this.page = e.detail.page;
     }
 
+    onModalClose() {
+        this.selectedCountry = null;
+    }
+    
     render() {
         return html`
             <h2>⭐ Países favoritos</h2>
@@ -138,9 +147,11 @@ export class FavoriteList extends LitElement {
                 .totalPages=${this.totalPages()}
                 @page-changed=${this.onPageChanged}
             ></pagination-controls>
-            `
-            }
-        `
+            `}
+        ${this.selectedCountry ? html`
+            <country-modal .country=${this.selectedCountry} @close=${this.onModalClose}></country-modal>
+        ` : ''}
+        `;
     }
 }
 customElements.define('favorite-list', FavoriteList);

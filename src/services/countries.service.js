@@ -1,7 +1,12 @@
 export async function getCountriesByRegion(region) {
-    const res = await fetch(`https://restcountries.com/v3.1/region/${region}`);
-    const json = await res.json();
-    return json;
+    try {
+        const res = await fetch(`https://restcountries.com/v3.1/region/${region}`);
+        const json = await res.json();
+        return json;
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
 }
 
 export function loadFromStorage(STORAGE_KEY) {
